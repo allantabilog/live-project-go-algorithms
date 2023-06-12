@@ -76,3 +76,27 @@ func TestDeleteAfter_nil(t *testing.T){
 		first.deleteAfter()
 	})
 }
+
+func TestAddRange_Empty(t *testing.T) {
+	// initially empty list
+	var list = makeLinkedList()
+	list.addRange([]string{"1", "2", "3"})
+
+	// expect sentinel -> 1 -> 2 -> 3
+	assert.Equal(t, list.sentinel.next.data, "1")
+	assert.Equal(t, list.sentinel.next.next.data, "2")
+	assert.Equal(t, list.sentinel.next.next.next.data, "3")
+}
+
+func TestAddRange_NonEmpty(t *testing.T) {
+	// initially nonempty list
+	var list = makeLinkedList()
+	list.sentinel.addAfter(&Cell{data: "0"})
+	list.addRange([]string{"1", "2", "3"})
+
+	// expect sentinel -> 1 -> 2 -> 3
+	assert.Equal(t, list.sentinel.next.data, "0")
+	assert.Equal(t, list.sentinel.next.next.data, "1")
+	assert.Equal(t, list.sentinel.next.next.next.data, "2")
+	assert.Equal(t, list.sentinel.next.next.next.next.data, "3")
+}

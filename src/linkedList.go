@@ -36,3 +36,21 @@ func (me *Cell) deleteAfter() *Cell {
 	me.next = nil 
 	return deletedCell
 }
+
+func (list *LinkedList) addRange(values []string) {
+	var lastCell *Cell 
+
+	// follow the 'next' pointers to locate the end of the list
+	for curr := list.sentinel; curr != nil; curr = curr.next {
+		lastCell = curr
+	}
+
+	// lastCelll should now point to the end of the list
+	// insert the values in
+	for _, value := range values {
+		var newCell = &Cell{data: value}
+		lastCell.next = newCell
+		lastCell = newCell 
+	}
+
+}

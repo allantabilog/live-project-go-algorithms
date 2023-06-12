@@ -41,6 +41,24 @@ func TestAddAfter_insert(t *testing.T) {
 	assert.Nil(t, second.next)
 }
 
+func TestBuildList(t *testing.T){
+	var list = makeLinkedList()
+	var sentinel = list.sentinel
+	var first = Cell{data: "first"}
+	var second = Cell{data: "second"}
+	var third = Cell{data: "third"}
+
+	sentinel.addAfter(&first)
+	first.addAfter(&second)
+	second.addAfter(&third)
+
+	// expect: sentinel -> first -> second -> third
+	assert.Equal(t, sentinel.next, &first )
+	assert.Equal(t, first.next, &second )
+	assert.Equal(t, second.next, &third )
+
+}
+
 func TestDeleteAfter_simple(t *testing.T){
 	var first = Cell{data: "first"}
 	var second = Cell{data: "second"}

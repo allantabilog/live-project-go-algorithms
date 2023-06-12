@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Cell struct {
 	data string
@@ -53,4 +56,16 @@ func (list *LinkedList) addRange(values []string) {
 		lastCell = newCell 
 	}
 
+}
+
+func (list *LinkedList) toString(sep string) string {
+	var b strings.Builder
+	for curr := list.sentinel; curr != nil; curr = curr.next {
+		if curr.next != nil {
+			fmt.Fprintf(&b, "%s %s", curr.data, sep)
+		} else {
+			fmt.Fprintf(&b, "%s", curr.data)
+		}
+	}
+	return b.String()
 }

@@ -10,7 +10,7 @@ func TestMakeLinkedList(t *testing.T){
 	list := makeLinkedList()
 	assert.NotNil(t, list)
 	assert.NotNil(t, list.sentinel)
-	assert.Equal(t, list.sentinel.data, "Sentinel")
+	assert.Equal(t, "Sentinel", list.sentinel.data)
 	assert.Nil(t, list.sentinel.next)
 }
 
@@ -19,7 +19,7 @@ func TestAddAfter_simple(t *testing.T) {
 	var second = Cell{data: "second"}
 	first.addAfter(&second)
 
-	assert.Equal(t, first.next, &second)
+	assert.Equal(t, &second, first.next)
 	assert.Nil(t, second.next)
 }
 func TestAddAfter_insert(t *testing.T) {
@@ -30,14 +30,14 @@ func TestAddAfter_insert(t *testing.T) {
 	// setup so that first -> second
 	first.addAfter(&second)
 
-	assert.Equal(t, first.next, &second)
+	assert.Equal(t, &second, first.next)
 	assert.Nil(t, second.next)
 
     // Now add the cell "insert" after "first"
 	// expected first -> insert -> second
 	first.addAfter(&insert)
-	assert.Equal(t, first.next, &insert)
-	assert.Equal(t, insert.next, &second)
+	assert.Equal(t, &insert, first.next)
+	assert.Equal(t, &second, insert.next)
 	assert.Nil(t, second.next)
 }
 
@@ -53,9 +53,9 @@ func TestBuildList(t *testing.T){
 	second.addAfter(&third)
 
 	// expect: sentinel -> first -> second -> third
-	assert.Equal(t, sentinel.next, &first )
-	assert.Equal(t, first.next, &second )
-	assert.Equal(t, second.next, &third )
+	assert.Equal(t, &first, sentinel.next )
+	assert.Equal(t, &second, first.next  )
+	assert.Equal(t, &third, second.next  )
 
 }
 
@@ -66,7 +66,7 @@ func TestDeleteAfter_simple(t *testing.T){
 	first.addAfter(&second)
 
 	var deleted = first.deleteAfter()
-	assert.Equal(t, deleted, &second)
+	assert.Equal(t, &second, deleted)
 	assert.Nil(t, first.next)
 }
 
@@ -83,9 +83,9 @@ func TestAddRange_Empty(t *testing.T) {
 	list.addRange([]string{"1", "2", "3"})
 
 	// expect sentinel -> 1 -> 2 -> 3
-	assert.Equal(t, list.sentinel.next.data, "1")
-	assert.Equal(t, list.sentinel.next.next.data, "2")
-	assert.Equal(t, list.sentinel.next.next.next.data, "3")
+	assert.Equal(t, "1", list.sentinel.next.data)
+	assert.Equal(t, "2", list.sentinel.next.next.data)
+	assert.Equal(t, "3", list.sentinel.next.next.next.data)
 }
 
 func TestAddRange_NonEmpty(t *testing.T) {
@@ -95,8 +95,9 @@ func TestAddRange_NonEmpty(t *testing.T) {
 	list.addRange([]string{"1", "2", "3"})
 
 	// expect sentinel -> 1 -> 2 -> 3
-	assert.Equal(t, list.sentinel.next.data, "0")
-	assert.Equal(t, list.sentinel.next.next.data, "1")
-	assert.Equal(t, list.sentinel.next.next.next.data, "2")
-	assert.Equal(t, list.sentinel.next.next.next.next.data, "3")
+	assert.Equal(t, "0", list.sentinel.next.data)
+	assert.Equal(t, "1", list.sentinel.next.next.data)
+	assert.Equal(t, "2", list.sentinel.next.next.next.data)
+	assert.Equal(t, "3", list.sentinel.next.next.next.next.data)
 }
+

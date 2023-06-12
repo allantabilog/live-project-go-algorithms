@@ -108,3 +108,19 @@ func TestToString(t *testing.T) {
 	list.addRange([]string{"1", "2", "3", "4", "5"})
 	assert.Equal(t, "Sentinel > 1 > 2 > 3 > 4 > 5", list.toString(" > "))
 }
+
+func TestLength(t *testing.T) {
+	var list = makeLinkedList()
+	assert.Equal(t, 0, list.length())
+
+	list.addRange([]string{"1", "2", "3"})
+	assert.Equal(t, 3, list.length())
+}
+
+func TestIsEmpty(t *testing.T) {
+	var list = makeLinkedList()
+	assert.True(t, list.isEmpty())
+
+	list.addRange([]string{"1", "2", "3"})
+	assert.False(t, list.isEmpty())
+}

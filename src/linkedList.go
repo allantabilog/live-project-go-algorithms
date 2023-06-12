@@ -70,3 +70,17 @@ func (list *LinkedList) toString(sep string) string {
 	}
 	return b.String()
 }
+
+func (list *LinkedList) length() int {
+	var length int = -1
+
+	for curr := list.sentinel; curr != nil; curr = curr.next {
+		length += 1
+	}
+
+	return length
+}
+
+func (list *LinkedList) isEmpty() bool {
+	return list.sentinel.next == nil
+}

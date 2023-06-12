@@ -60,9 +60,10 @@ func (list *LinkedList) addRange(values []string) {
 
 func (list *LinkedList) toString(sep string) string {
 	var b strings.Builder
+	sep = strings.Trim(sep, " ");
 	for curr := list.sentinel; curr != nil; curr = curr.next {
 		if curr.next != nil {
-			fmt.Fprintf(&b, "%s %s", curr.data, sep)
+			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
 		} else {
 			fmt.Fprintf(&b, "%s", curr.data)
 		}

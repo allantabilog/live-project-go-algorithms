@@ -101,3 +101,10 @@ func TestAddRange_NonEmpty(t *testing.T) {
 	assert.Equal(t, "3", list.sentinel.next.next.next.next.data)
 }
 
+func TestToString(t *testing.T) {
+	var list = makeLinkedList()
+	assert.Equal(t, list.toString("->"), "Sentinel")
+
+	list.addRange([]string{"1", "2", "3", "4", "5"})
+	assert.Equal(t, "Sentinel > 1 > 2 > 3 > 4 > 5", list.toString(" > "))
+}

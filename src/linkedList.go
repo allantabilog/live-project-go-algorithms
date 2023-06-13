@@ -13,12 +13,8 @@ type Cell struct {
 type LinkedList struct {
 	sentinel *Cell
 }
-func main() {
 
-	listOne := makeLinkedList()
-	fmt.Println(listOne);
-
-}	
+// returns an empty linked list
 func makeLinkedList() LinkedList{
 	// return LinkedList{ sentinel: nil } // my original code
 	return LinkedList {
@@ -41,6 +37,8 @@ func (me *Cell) deleteAfter() *Cell {
 	return deletedCell
 }
 
+// add a list of values to the list
+// in the same order as the given list
 func (list *LinkedList) addRange(values []string) {
 	var lastCell *Cell 
 
@@ -59,6 +57,10 @@ func (list *LinkedList) addRange(values []string) {
 
 }
 
+// representation of the linked list as a string
+// takes a separator character e.g. "->"
+// list looks like:
+// Sentinel -> 1 -> 2 -> 3
 func (list *LinkedList) toString(sep string) string {
 	var b strings.Builder
 	sep = strings.Trim(sep, " ");
@@ -72,6 +74,8 @@ func (list *LinkedList) toString(sep string) string {
 	return b.String()
 }
 
+// Return an array containing the list's contents
+// (excludes the sentinel)
 func (list *LinkedList) toArray() []string {
 	var contents []string
 	for curr := list.sentinel.next; curr != nil; curr = curr.next {
@@ -80,6 +84,7 @@ func (list *LinkedList) toArray() []string {
 	return contents
 }
 
+// Returns the length of the list == number of contents
 func (list *LinkedList) length() int {
 	var length int = -1
 
@@ -90,6 +95,7 @@ func (list *LinkedList) length() int {
 	return length
 }
 
+// True iff the list has no contents
 func (list *LinkedList) isEmpty() bool {
 	return list.sentinel.next == nil
 }

@@ -77,6 +77,22 @@ func TestDeleteAfter_nil(t *testing.T){
 	})
 }
 
+func TestSuccessiveDeletes(t *testing.T){
+	var list = makeLinkedList()
+	list.addRange([]string{"1", "2", "3"})
+	
+	list.sentinel.deleteAfter()
+	// expect Sentinel -> 2 -> 3
+	assert.Equal(t, "2", list.sentinel.next.data)
+	
+	list.sentinel.deleteAfter()
+	// expect Sentinel -> 3
+	assert.Equal(t, "3", list.sentinel.next.data)
+
+	list.sentinel.deleteAfter()
+	// expect list to be empty now
+	assert.True(t, list.isEmpty())
+}
 func TestAddRange_Empty(t *testing.T) {
 	// initially empty list
 	var list = makeLinkedList()
@@ -123,4 +139,11 @@ func TestIsEmpty(t *testing.T) {
 
 	list.addRange([]string{"1", "2", "3"})
 	assert.False(t, list.isEmpty())
+}
+
+func TestToArray(t *testing.T){
+	var list = makeLinkedList()
+
+	list.addRange([]string{"1", "2", "3"})
+	assert.Equal(t, []string{"1", "2", "3"}, list.toArray())
 }

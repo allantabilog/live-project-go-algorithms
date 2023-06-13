@@ -36,7 +36,8 @@ func (me *Cell) deleteAfter() *Cell {
 	if deletedCell == nil {
 		panic("No cell to delete")
 	}
-	me.next = nil 
+	// point me to whatever the deleted cell was pointing to
+	me.next = deletedCell.next
 	return deletedCell
 }
 
@@ -69,6 +70,14 @@ func (list *LinkedList) toString(sep string) string {
 		}
 	}
 	return b.String()
+}
+
+func (list *LinkedList) toArray() []string {
+	var contents []string
+	for curr := list.sentinel.next; curr != nil; curr = curr.next {
+		contents = append(contents, curr.data)
+	}
+	return contents
 }
 
 func (list *LinkedList) length() int {

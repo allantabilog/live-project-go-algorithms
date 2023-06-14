@@ -69,8 +69,27 @@ func TestHasLoop_Positive(t *testing.T) {
 	)
 
 	assert.True(t, list2.hasLoop())
+}
+
+func TestLoopDetector(t *testing.T) {
+	// Make a list from an array of values.
+    values := []string {
+        "0", "1", "2", "3", "4", "5",
+    }
+    list := makeLinkedList()
+    list.addRange(values)
+
+    fmt.Println(list.toString(" "))
+
+	assert.False(t, list.hasLoop())
+
+	// Make cell 5 point to cell 2.
+    list.sentinel.next.next.next.next.next.next = list.sentinel.next.next
+	assert.True(t, list.hasLoop())
+	assert.Equal(t, "Sentinel  0  1  2  3  4  1  2  3  ", list.toStringMax(" ", 10))
 
 
-
-
+	list.sentinel.next.next.next.next.next = list.sentinel.next.next
+	assert.True(t, list.hasLoop())
+	assert.Equal(t, "Sentinel  0  1  2  3  1  2  3  1  ", list.toStringMax(" ", 10))
 }

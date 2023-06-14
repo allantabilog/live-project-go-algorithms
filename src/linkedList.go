@@ -74,6 +74,27 @@ func (list *LinkedList) toString(sep string) string {
 	return b.String()
 }
 
+// a toString() function that will not go into a loop
+// when it encounters a loop in the linked list
+func (list *LinkedList) toStringMax(sep string, max int) string {
+	var b strings.Builder
+	var ctr int 
+	sep = strings.Trim(sep, " ");
+	for curr := list.sentinel; curr != nil; curr = curr.next {
+		ctr = ctr + 1
+		if ctr == max {
+			break
+		}
+		if curr.next != nil {
+			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
+		} else {
+			fmt.Fprintf(&b, "%s", curr.data)
+		}
+	}
+	return b.String()
+}
+
+
 // Return an array containing the list's contents
 // (excludes the sentinel)
 func (list *LinkedList) toArray() []string {

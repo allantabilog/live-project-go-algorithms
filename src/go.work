@@ -1,3 +1,6 @@
 go 1.19
 
-use ./singly_linked
+use (
+	./doubly_linked
+	./singly_linked
+)

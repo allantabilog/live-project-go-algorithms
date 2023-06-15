@@ -15,9 +15,9 @@ type LinkedList struct {
 }
 
 // returns an empty linked list
-func makeLinkedList() LinkedList{
+func makeLinkedList() LinkedList {
 	// return LinkedList{ sentinel: nil } // my original code
-	return LinkedList {
+	return LinkedList{
 		sentinel: &Cell{data: "Sentinel", next: nil},
 	}
 }
@@ -27,8 +27,9 @@ func (me *Cell) addAfter(cell *Cell) {
 	cell.next = me.next
 	me.next = cell
 }
+
 func (me *Cell) deleteAfter() *Cell {
-	deletedCell := me.next 
+	deletedCell := me.next
 	if deletedCell == nil {
 		panic("No cell to delete")
 	}
@@ -40,7 +41,7 @@ func (me *Cell) deleteAfter() *Cell {
 // add a list of values to the list
 // in the same order as the given list
 func (list *LinkedList) addRange(values []string) {
-	var lastCell *Cell 
+	var lastCell *Cell
 
 	// follow the 'next' pointers to locate the end of the list
 	for curr := list.sentinel; curr != nil; curr = curr.next {
@@ -52,7 +53,7 @@ func (list *LinkedList) addRange(values []string) {
 	for _, value := range values {
 		var newCell = &Cell{data: value}
 		lastCell.next = newCell
-		lastCell = newCell 
+		lastCell = newCell
 	}
 
 }
@@ -63,7 +64,7 @@ func (list *LinkedList) addRange(values []string) {
 // Sentinel -> 1 -> 2 -> 3
 func (list *LinkedList) toString(sep string) string {
 	var b strings.Builder
-	sep = strings.Trim(sep, " ");
+	sep = strings.Trim(sep, " ")
 	for curr := list.sentinel; curr != nil; curr = curr.next {
 		if curr.next != nil {
 			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
@@ -78,8 +79,8 @@ func (list *LinkedList) toString(sep string) string {
 // when it encounters a loop in the linked list
 func (list *LinkedList) toStringMax(sep string, max int) string {
 	var b strings.Builder
-	var ctr int 
-	sep = strings.Trim(sep, " ");
+	var ctr int
+	sep = strings.Trim(sep, " ")
 	for curr := list.sentinel; curr != nil; curr = curr.next {
 		ctr = ctr + 1
 		if ctr == max {
@@ -93,7 +94,6 @@ func (list *LinkedList) toStringMax(sep string, max int) string {
 	}
 	return b.String()
 }
-
 
 // Return an array containing the list's contents
 // (excludes the sentinel)

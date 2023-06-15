@@ -1,4 +1,4 @@
-module live-projects
+module singly_linked
 
 go 1.19
 

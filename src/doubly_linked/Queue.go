@@ -46,9 +46,10 @@ func (queue *Queue) dequeue() string {
 func (queue *Queue) isEmpty() bool {
 	// queue is empty if all there is are the top and bottom sentinels
 	// and they are pointing to each other
+	top := queue.top()
+	bottom := queue.bottom()
 
-	return queue.top().next == queue.bottom() &&
-		queue.bottom().prev == queue.top()
+	return top.next == bottom && bottom.prev == top
 }
 func (queue *Queue) toString(sep string) string {
 	return queue.items.toString(sep)

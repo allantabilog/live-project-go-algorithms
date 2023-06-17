@@ -54,6 +54,24 @@ func (me *Cell) addBefore(cell *Cell) {
 	me.prev = cell
 }
 
+func (list *DoublyLinkedList) addRange(values []string) {
+	// for doubly-linked lists, the last cell
+	// is the cell just befopre the bottom sentinel
+	var lastCell *Cell = list.bottomSentinel.prev
+
+	// insert the values in
+	for _, value := range values {
+		var newCell = &Cell{data: value}
+		lastCell.next = newCell
+		newCell.prev = lastCell
+		lastCell = newCell
+	}
+	// and put the links in to/from the bottomSentinel
+	lastCell.next = list.bottomSentinel
+	list.bottomSentinel.prev = lastCell
+
+}
+
 func (list *DoublyLinkedList) toString(sep string) string {
 	var b strings.Builder
 	sep = strings.Trim(sep, " ")

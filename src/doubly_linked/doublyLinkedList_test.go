@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -75,6 +77,52 @@ func TestAddBefore_NonEmpty(t *testing.T) {
 	)
 
 }
+func TestAddRange(t *testing.T) {
+	list := makeDoublyLinkedList()
+	list.addRange([]string{"1", "2", "3"})
+	assert.Equal(t,
+		"top_sentinel <-> 1 <-> 2 <-> 3 <-> bottom_sentinel",
+		list.toString("<->"),
+	)
+}
+
+// test following all the links forward from the topSentinel
+// via .next links
+func TestForwardTraverse(t *testing.T) {
+	list := makeDoublyLinkedList()
+	list.addRange([]string{"1", "2", "3"})
+	// test following all the links forward from the topSentinel
+	var b strings.Builder
+	var sep string = ":"
+
+	for curr := list.topSentinel; curr != nil; curr = curr.next {
+		if curr.next != nil {
+			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
+		} else {
+			fmt.Fprintf(&b, "%s", curr.data)
+		}
+	}
+	assert.Equal(t, "top_sentinel : 1 : 2 : 3 : bottom_sentinel", b.String())
+}
+
+// test following all the links backward from the bottomSentinel
+// via .prev links
+func TestBackwardTraverse(t *testing.T) {
+	list := makeDoublyLinkedList()
+	list.addRange([]string{"1", "2", "3"})
+	// test following all the links forward from the topSentinel
+	var b strings.Builder
+	var sep string = ":"
+
+	for curr := list.bottomSentinel; curr != nil; curr = curr.prev {
+		if curr.prev != nil {
+			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
+		} else {
+			fmt.Fprintf(&b, "%s", curr.data)
+		}
+	}
+	assert.Equal(t, "bottom_sentinel : 3 : 2 : 1 : top_sentinel", b.String())
+}
 
 func TestToString(t *testing.T) {
 	list := makeDoublyLinkedList()
@@ -87,5 +135,4 @@ func TestToString(t *testing.T) {
 		"top_sentinel <-> first <-> second <-> bottom_sentinel",
 		list.toString("<->"),
 	)
-
 }

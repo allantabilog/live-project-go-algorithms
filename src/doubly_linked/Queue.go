@@ -10,13 +10,21 @@ func makeQueue() Queue {
 	return queue
 }
 
+// since the queue.item.topSentinel is accessed quite often
+// define a function to access it
+func (queue *Queue) top() *Cell {
+	return queue.items.topSentinel
+}
+
+// since the queue.item.bottomSentinel is accessed quite often
+// define a function to access it
+func (queue *Queue) bottom() *Cell {
+	return queue.items.bottomSentinel
+}
+
 func (queue *Queue) enqueue(item string) {
-	var lastCell = queue.items.bottomSentinel.prev
-	var newCell *Cell = &Cell{data: item}
-	lastCell.next = newCell
-	newCell.prev = lastCell
-	newCell.next = queue.items.bottomSentinel
-	queue.items.bottomSentinel.prev = newCell
+	newCell := &Cell{data: item}
+	queue.bottom().addBefore(newCell)
 }
 
 func (queue *Queue) dequeue() string {
@@ -25,23 +33,22 @@ func (queue *Queue) dequeue() string {
 	if queue.isEmpty() {
 		panic("Dequeueing an empty queue")
 	}
+	// top := queue.items.topSentinel
+	var removedCell = queue.top().next
+	var newFirstCell = removedCell.next
 
-	var cellToDequeue = queue.items.topSentinel.next
-	var newFirstCell = cellToDequeue.next
+	queue.top().next = removedCell.next
+	newFirstCell.prev = queue.top()
 
-	queue.items.topSentinel.next = newFirstCell
-	newFirstCell.prev = queue.items.topSentinel
-
-	return cellToDequeue.data
+	return removedCell.data
 }
 
 func (queue *Queue) isEmpty() bool {
 	// queue is empty if all there is are the top and bottom sentinels
 	// and they are pointing to each other
-	top := queue.items.topSentinel
-	bottom := queue.items.bottomSentinel
 
-	return top.next == bottom && bottom.prev == top
+	return queue.top().next == queue.bottom() &&
+		queue.bottom().prev == queue.top()
 }
 func (queue *Queue) toString(sep string) string {
 	return queue.items.toString(sep)

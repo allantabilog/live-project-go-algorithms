@@ -19,14 +19,14 @@ func TestPush(t *testing.T) {
 
 	stack.push("Item 1")
 	assert.False(t, stack.isEmpty())
-	assert.Equal(t, "Item 1", stack.contents.sentinel.next.data)
-	
+	assert.Equal(t, "Item 1", stack.items.sentinel.next.data)
+
 	stack.push("Item 2")
-	assert.Equal(t, "Item 2", stack.contents.sentinel.next.data)
-	
+	assert.Equal(t, "Item 2", stack.items.sentinel.next.data)
+
 	stack.push("Item 3")
-	assert.Equal(t, "Item 3", stack.contents.sentinel.next.data)
-	
+	assert.Equal(t, "Item 3", stack.items.sentinel.next.data)
+
 	assert.Equal(t, 3, stack.length())
 }
 
@@ -45,7 +45,7 @@ func TestPop_Empty(t *testing.T) {
 	assert.True(t, stack.isEmpty())
 }
 
-func TestPop_NonEmpty(t *testing.T){
+func TestPop_NonEmpty(t *testing.T) {
 	stack := makeStack()
 	stack.push("Item 1")
 
@@ -54,7 +54,7 @@ func TestPop_NonEmpty(t *testing.T){
 	assert.True(t, stack.isEmpty())
 }
 
-func TestLIFO(t *testing.T){
+func TestLIFO(t *testing.T) {
 	stack := makeStack()
 
 	stack.push("1")
@@ -66,20 +66,19 @@ func TestLIFO(t *testing.T){
 	assert.True(t, stack.isEmpty())
 }
 
-func TestLIFO_ShowContents(t *testing.T){
+func TestLIFO_ShowContents(t *testing.T) {
 	stack := makeStack()
 
 	stack.push("Apple")
-    stack.push("Banana")
-    stack.push("Coconut")
-    stack.push("Date")
+	stack.push("Banana")
+	stack.push("Coconut")
+	stack.push("Date")
 
 	for !stack.isEmpty() {
 		fmt.Printf("Popped %-7s Remaining %d: %v\n",
 			stack.pop(),
 			stack.length(),
-			stack.toArray(),)
+			stack.toArray())
 	}
-
 
 }

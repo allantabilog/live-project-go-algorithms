@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -58,17 +57,34 @@ func TestPopTop_AfterPushTop(t *testing.T) {
 }
 
 func TestPopBottom_AfterPushBottom(t *testing.T) {
-	t.Skip("There is a bug with pushBottom() skip for now")
 	deque := makeDeque()
 	deque.pushBottom("1")
 	deque.pushBottom("2")
-	// deque.pushBottom("3")
-
-	fmt.Println(deque.toString(">"))
-
+	deque.pushBottom("3")
+	assert.Equal(t, "3", deque.popBottom())
 	assert.Equal(t, "2", deque.popBottom())
-	fmt.Println(deque.toString(">"))
-	// assert.Equal(t, "2", deque.popBottom())
-	// assert.Equal(t, "1", deque.popBottom())
-	// assert.True(t, deque.isEmpty())
+	assert.Equal(t, "1", deque.popBottom())
+	assert.True(t, deque.isEmpty())
+}
+
+func TestPopTop_AfterPushBottom(t *testing.T) {
+	deque := makeDeque()
+	deque.pushBottom("1")
+	deque.pushBottom("2")
+	deque.pushBottom("3")
+	assert.Equal(t, "1", deque.popTop())
+	assert.Equal(t, "2", deque.popTop())
+	assert.Equal(t, "3", deque.popTop())
+	assert.True(t, deque.isEmpty())
+}
+
+func TestPopBottom_AfterPushTop(t *testing.T) {
+	deque := makeDeque()
+	deque.pushTop("1")
+	deque.pushTop("2")
+	deque.pushTop("3")
+	assert.Equal(t, "1", deque.popBottom())
+	assert.Equal(t, "2", deque.popBottom())
+	assert.Equal(t, "3", deque.popBottom())
+	assert.True(t, deque.isEmpty())
 }

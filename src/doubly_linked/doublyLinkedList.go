@@ -48,7 +48,7 @@ func (me *Cell) addBefore(cell *Cell) {
 	if me.prev == nil {
 		panic("Cannot add cell before top sentinel")
 	}
-	cell.prev = me.prev.next
+	cell.prev = me.prev
 	cell.next = me
 	me.prev.next = cell
 	me.prev = cell
@@ -76,6 +76,24 @@ func (list *DoublyLinkedList) toString(sep string) string {
 	var b strings.Builder
 	sep = strings.Trim(sep, " ")
 	for curr := list.topSentinel; curr != nil; curr = curr.next {
+		if curr.next != nil {
+			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
+		} else {
+			fmt.Fprintf(&b, "%s", curr.data)
+		}
+	}
+	return b.String()
+}
+
+func (list *DoublyLinkedList) toStringMax(sep string, max int) string {
+	var b strings.Builder
+	var ctr int
+	sep = strings.Trim(sep, " ")
+	for curr := list.topSentinel; curr != nil; curr = curr.next {
+		ctr = ctr + 1
+		if ctr == max {
+			break
+		}
 		if curr.next != nil {
 			fmt.Fprintf(&b, "%s %s ", curr.data, sep)
 		} else {

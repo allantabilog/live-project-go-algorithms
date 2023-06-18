@@ -41,9 +41,6 @@ func (deque *Deque) popTop() string {
 	popped := top.next
 
 	// re-point the next and prev links
-	// TODO there is a bug right about here
-	// best to draw some diagrams to understand
-	// the desired situation
 	top.next = top.next.next
 	top.next.prev = popped.prev
 
@@ -62,9 +59,6 @@ func (deque *Deque) popBottom() string {
 	popped := bottom.prev
 
 	// re-point the next and prev links
-	// TODO there is a bug right about here
-	// best to draw some diagrams to understand
-	// the desired situation
 	bottom.prev = bottom.prev.prev
 	bottom.prev.next = popped.next
 	return popped.data
@@ -72,4 +66,10 @@ func (deque *Deque) popBottom() string {
 
 func (deque *Deque) toString(sep string) string {
 	return deque.items.toString(sep)
+}
+
+// use this for printing the structure
+// in the case when there are loops
+func (deque *Deque) toStringMax(sep string, max int) string {
+	return deque.items.toStringMax(sep, max)
 }

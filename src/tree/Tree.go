@@ -83,6 +83,26 @@ func (node *Node) postorder() string {
 	return result
 }
 
+func (node *Node) breadthFirst() string {
+	var result string
+	var queue QueueNode = makeQueueNode()
+	queue.enqueue(node)
+
+	for !queue.isEmpty() {
+		node = queue.dequeue()
+		result += node.data + " "
+		if node.left != nil {
+			queue.enqueue(node.left)
+		}
+		if node.right != nil {
+			queue.enqueue(node.right)
+		}
+	}
+
+	return result
+
+}
+
 func buildTree() Tree {
 	var tree Tree
 	tree.setRoot("A")

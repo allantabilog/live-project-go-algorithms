@@ -2,8 +2,8 @@ package main
 
 import (
 	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"fmt"
 )
 
 func TestBuildTree(t *testing.T) {
@@ -38,4 +38,24 @@ func TestPostorder(t *testing.T) {
 	var tree = buildTree()
 	var expectedTraversal = "D G E B I J H F C A"
 	assert.Equal(t, expectedTraversal, tree.root.postorder())
+}
+
+func TestBreadthFirst(t *testing.T) {
+	var tree = buildTree()
+	var expectedTraversal = "A B C D E F G H I J "
+	assert.Equal(t, expectedTraversal, tree.root.breadthFirst())
+}
+
+func TestMain(t *testing.T) {
+		// Build a tree.
+		var tree = buildTree()
+		
+		// Display with indentation.
+		fmt.Println(tree.root.displayIndented("  ", 0))
+	
+		// Display traversals.
+		fmt.Println("Preorder:     ", tree.root.preorder())
+		fmt.Println("Inorder:      ", tree.root.inorder())
+		fmt.Println("Postorder:    ", tree.root.postorder())
+		fmt.Println("Breadth first:", tree.root.breadthFirst())
 }

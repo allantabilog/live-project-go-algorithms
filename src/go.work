@@ -3,5 +3,6 @@ go 1.19
 use (
 	./doubly_linked
 	./singly_linked
+	./sorted_tree
 	./tree
 )

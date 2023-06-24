@@ -154,11 +154,4 @@ func (queue *Queue[T]) toString(sep string) string {
 	return queue.items.toString(sep)
 }
 
-// test driver
-func main() {
-	var queue = makeQueue[string]("top", "bottom")
-	queue.enqueue("1")
-	queue.enqueue("2")
-	queue.enqueue("3")
-	fmt.Println(queue.toString(">"))
-}
+// see unit test Queue_test.go for example usage

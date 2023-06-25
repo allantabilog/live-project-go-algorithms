@@ -11,6 +11,12 @@ func TestFactorialNegative(t *testing.T){
 		Factorial(-1)
 	})
 }
+
+func TestFactorialGT20(t *testing.T) {
+	assert.Panics(t, func() {
+		Factorial(100)
+	})
+}
 func TestFactorial(t *testing.T) {
 
 	//table-driven test

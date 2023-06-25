@@ -3,6 +3,7 @@ go 1.19
 use (
 	./doubly_linked
 	./generic
+	./recursion
 	./singly_linked
 	./sorted_tree
 	./tree

@@ -4,6 +4,7 @@ use (
 	./doubly_linked
 	./generic
 	./recursion
+	./recursion/main
 	./singly_linked
 	./sorted_tree
 	./tree

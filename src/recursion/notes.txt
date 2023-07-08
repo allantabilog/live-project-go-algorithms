@@ -4,3 +4,7 @@ Knight's tour problem
     and structs (to model offsets, i.e. allowed moves relative to current position)
 - note the board in the project is 8x8 but can be generalised
     - the illustration shows a 5x5 board    
+
+
+N-Queens problem 
+- composing and testing functions used by solution (bottom-up implementation)    

@@ -1,6 +1,7 @@
 package recursion
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,6 +9,19 @@ import (
 
 func TestKnightsTour(t *testing.T) {
 	var board = MakeBoard(8, 8)
+	InitialiseOffsets()
+	
+	fmt.Println("Before tour search:")
+	Trace(board)
+	
+	var result = FindTour(board, 8, 8, 0, 0, 0)
+	
+	if result {
+		fmt.Println("Successfully found a tour")
+	} else {
+		fmt.Println("Failed to find a tour")
+	}
+	fmt.Println("After tour search:")
 	Trace(board)
 }
 

@@ -4,15 +4,19 @@ import (
 	"fmt"
 )
 
-// the board dimensions
-const numRows = 8
-const numCols = numRows
+const (
+	// the board dimensions
+	numRows = 8
+	numCols = 8
 
-// closed or open tour required?
-const requireClosedTour = false
+	// closed or open tour required?
+	requireClosedTour = false
+	
+	// used to mark an unvisited square
+	unvisited = -1
+)
 
-// used to mark an unvisited square
-const unvisited = -1
+
 
 // defines "offsets" for a knight's legal move relative 
 /// to its current position
@@ -33,7 +37,7 @@ var numCalls int64
 // relative to the current position i.e.
 // note...depending on the current position, some of these moves
 // are not legal
-func initialiseOffsets() {
+func InitialiseOffsets() {
 	moveOffsets = []Offset{
 		{-2, -1},
 		{-1, -2},
@@ -87,28 +91,62 @@ func FindTour(
 	curCol int,
 	numVisited int,
 ) bool {
-// @todo: increment numCalls
+
+// store the previous value before updating it
+// we will use this to check for closed tours i.e.
+// if the last position is the same as the first
+var prevVisitedValue = board[curRow][curCol]	
+
+// mark the current position with the visit number
+board[curRow][curCol] = numVisited
+
 if numVisited == numRows * numCols {
 	if !requireClosedTour {
 		return true
 	}
-	// check to see if this is a closed tour
-	// try every move from here and if any of these moves 
-	// land back on the starting position - we have a closed tour (return true)
-	// otherwise - not a closed tour, return false
-	
+	// if the last position is the same as the first then we have a closed tour
+	// otherwise, we don't have a closed tour
+	if prevVisitedValue == board[curRow][curCol] {
+		return true
+	}
+	return false
 }
 // not every square has been visited
 // continue searching for a tour from here
+var nextRow, nextCol = FindNextMove(curRow, curCol, board)
+
+if nextRow != -1 && nextCol != -1 {
+	FindTour(board, numRows, numCols, nextRow, nextCol, numVisited + 1)
+} else {
+	fmt.Println("No more possible moves")
+	return false
+}
+
 
 // @todo remove this when done
 return false
 
 }
 
+// Work out the next position from current position
+// can use different strategies
+// this is the simplest one: just try every offset in the list
+// and stick with the first one that is valid
+func FindNextMove(currRow int, currCol int, board [][]int) (int, int) {
+	var nextRow, nextCol = -1, -1
+	for _, move := range moveOffsets {
+		var testRow, testCol = currRow + move.dr, currCol + move.dc
+		if ValidateMove(testRow, testCol, board) {
+			nextRow, nextCol = testRow, testCol
+			break
+		} 
+	}
+	return nextRow, nextCol
+}
+
 // Check that a move to (row, col) on the board is allowed
 func ValidateMove(toRow int, toCol int, board [][]int) bool {
-	if toRow < 0 || toRow > 7 || toCol < 0 || toCol > 7 {
+	if toRow < 0 || toRow > numRows - 1 || toCol < 0 || toCol > numCols - 1 {
 		return false
 	}
 	if board[toRow][toCol] != unvisited {

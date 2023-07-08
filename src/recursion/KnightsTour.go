@@ -79,6 +79,7 @@ func Trace[T comparable](board [][]T) {
 		}
 		fmt.Println()
 	}
+	fmt.Println()
 }
 
 // The main function to find a tour if it exists or not

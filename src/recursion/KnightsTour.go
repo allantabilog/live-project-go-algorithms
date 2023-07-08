@@ -56,26 +56,26 @@ func InitialiseOffsets() {
 // board[i][j] == v means that:
 // the knight visited square (i,j) in step v
 // the starting square gets the value 0
-func MakeBoard(numRows int, numCols int) [][]int {
-	var board [][]int = make([][]int, numRows)
+func MakeBoard[T comparable](numRows int, numCols int, initialValue T) [][]T {
+	var board [][]T = make([][]T, numRows)
 
 	for i := range(board) {
-		board[i] = make([]int, numCols)
+		board[i] = make([]T, numCols)
 	}
 	
 	for i := 0; i < numRows; i++ {
 		for j := 0; j < numCols; j++ {
-			board[i][j] = unvisited
+			board[i][j] = initialValue
 		}
 	}
 
 	return board
 }
 
-func Trace(board [][]int) {
+func Trace[T comparable](board [][]T) {
 	for i := 0; i < len(board); i++ {
 		for j :=0 ; j < len(board); j++ {
-			fmt.Printf(" %2d", board[i][j])
+			fmt.Printf(" %v", board[i][j])
 		}
 		fmt.Println()
 	}

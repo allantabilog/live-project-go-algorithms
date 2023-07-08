@@ -8,7 +8,7 @@ import (
 )
 
 func TestKnightsTour(t *testing.T) {
-	var board = MakeBoard(8, 8)
+	var board = MakeBoard(numRows, numCols, unvisited)
 	InitialiseOffsets()
 	
 	fmt.Println("Before tour search:")
@@ -26,7 +26,7 @@ func TestKnightsTour(t *testing.T) {
 }
 
 func TestValidateMove(t *testing.T) {
-	var board = MakeBoard(8, 8)
+	var board = MakeBoard(numRows, numCols, unvisited)
 	// setup an initial configuration
 	var row, col = 4, 4
 	board[row][col] = 0

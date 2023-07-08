@@ -1,6 +1,6 @@
 # live-project-go-algorithms
 
-These is my repos for the algorithms project with Go.
+This is my repos for the algorithms project with Go.
 
 The directories under src/ store the code and tests for the the project milestones.
 singly_linked - singly-linked lists

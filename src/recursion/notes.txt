@@ -1,0 +1,6 @@
+Knight's tour problem
+- use recursion to reduce (drastically) the solution space
+- in this live project - data representation using slices (to model the board)
+    and structs (to model offsets, i.e. allowed moves relative to current position)
+- note the board in the project is 8x8 but can be generalised
+    - the illustration shows a 5x5 board    

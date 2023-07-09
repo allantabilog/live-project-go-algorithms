@@ -66,3 +66,27 @@ func TestSeriesIsLegal_Diagonal(t *testing.T) {
 	// boardBad fails column series 
 	assert.Equal(t, false, seriesIsLegal(boardBad, 10, 0, 0, 1, 1), "Board has >= 2 queens in a diagonal")
 }
+
+func TestBoardIsLegal(t *testing.T) {
+	// generate some test boards
+	var emptyBoard = MakeBoard[string](10, 10, empty)
+
+	var goodBoard = MakeBoard[string](10, 10, empty)
+	goodBoard[0][0] = queen
+	goodBoard[9][0] = queen
+	goodBoard[5][5] = queen
+
+
+	var testCases = []struct {
+		board [][]string
+		expected bool
+	}{
+		{board: emptyBoard, expected: true },
+		{board: goodBoard, expected: true },
+	}
+
+	for _, tc := range testCases {
+		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 10))
+	}
+
+}

@@ -52,6 +52,29 @@ func seriesIsLegal(board [][]string, numRows, startRow, startCol, incrRow, incrC
 	return queenCount < 2
 }
 
+// returns true iff
+// every row, column, and diagonal on the board is legal
+func boardIsLegal(board [][]string, dim int) bool {
+	// scan all rows
+	for row := 0; row < dim; row++ {
+		if !seriesIsLegal(board, 10, row, 0, 0, 1) {
+			return false
+		}
+	}
+	
+	// scan all columns
+	for col := 0; col < dim; col++ {
+		if !seriesIsLegal(board, 10, 0, col, 1, 0) {
+			return false
+		}
+	}
+	// scan all diagonals
+	// @todo. find an algorithm for scanning all diagonals systematically
+	if !seriesIsLegal(board, 10, 0, 0, 1, 1) {
+		return false
+	}
+	return true
+}
 func placeQueens1(board [][]string, numRows, r, c int) bool {
 	return false
 }

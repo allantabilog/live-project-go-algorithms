@@ -73,20 +73,39 @@ func TestBoardIsLegal(t *testing.T) {
 
 	var goodBoard = MakeBoard[string](10, 10, empty)
 	goodBoard[0][0] = queen
-	goodBoard[9][0] = queen
-	goodBoard[5][5] = queen
+	goodBoard[1][3] = queen
+	goodBoard[2][4] = queen
+	goodBoard[3][7] = queen
+	goodBoard[9][1] = queen
+	goodBoard[5][6] = queen
+	goodBoard[4][8] = queen
+	goodBoard[6][9] = queen
+
+	var badBoard = MakeBoard[string](10, 10, empty)
+	badBoard[0][0] = queen
+	badBoard[1][3] = queen
+	badBoard[2][4] = queen
+	badBoard[3][7] = queen
+	badBoard[9][1] = queen
+	badBoard[5][6] = queen
+	badBoard[4][8] = queen
+	badBoard[6][8] = queen
+
+	Trace(goodBoard)
 
 
 	var testCases = []struct {
 		board [][]string
 		expected bool
+		description string
 	}{
-		{board: emptyBoard, expected: true },
-		{board: goodBoard, expected: true },
+		{board: emptyBoard, expected: true, description: "empty board is legal" },
+		{board: goodBoard, expected: true, description: "good board is legal" },
+		{board: badBoard, expected: false, description: "bad board is not legal" },
 	}
 
 	for _, tc := range testCases {
-		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 10))
+		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 10), tc.description)
 	}
 
 }

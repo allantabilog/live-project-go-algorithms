@@ -33,14 +33,14 @@ func NQueensDriver() {
 }
 
 // Returns true if the given series of squares contains at most one queen
-func seriesIsLegal(board [][]string, numRows, startRow, startCol, incrRow, incrCol int) bool {
+func seriesIsLegal(board [][]string, dim, startRow, startCol, incrRow, incrCol int) bool {
 	// maybe validate that incrRow and incrCol are g.t. 0
 	// otherwise the loop below will never terminate
 	var queenCount = 0
 
 	var row, col = startRow, startCol
 	for {
-		if row > qnNumRows - 1 || col > qnNumCols - 1 {
+		if row > dim - 1 || col > dim - 1 {
 			break
 		}
 		if board[row][col] == queen {
@@ -57,21 +57,21 @@ func seriesIsLegal(board [][]string, numRows, startRow, startCol, incrRow, incrC
 func boardIsLegal(board [][]string, dim int) bool {
 	// scan all rows
 	for row := 0; row < dim; row++ {
-		if !seriesIsLegal(board, 10, row, 0, 0, 1) {
+		if !seriesIsLegal(board, dim, row, 0, 0, 1) {
 			return false
 		}
 	}
 	
 	// scan all columns
 	for col := 0; col < dim; col++ {
-		if !seriesIsLegal(board, 10, 0, col, 1, 0) {
+		if !seriesIsLegal(board, dim, 0, col, 1, 0) {
 			return false
 		}
 	}
 	// scan all diagonals
 	for row := 0; row < dim; row++ {
 		for col := 0; col < dim; col++ {
-			if !seriesIsLegal(board, 10, row, col, 1, 1) {
+			if !seriesIsLegal(board, dim, row, col, 1, 1) {
 				return false
 			}
 		}

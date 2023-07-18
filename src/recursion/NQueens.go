@@ -78,6 +78,29 @@ func boardIsLegal(board [][]string, dim int) bool {
 	}
 	return true
 }
+
+func queenCount(board [][]string, dim int) int {
+	var queenCount = 0 
+
+	for row := 0; row < dim; row++ {
+		for col := 0; col < dim; col++ {
+			if board[row][col] == queen {
+				queenCount++
+			}
+		}
+	}
+	return queenCount
+}
+func boardIsASolution(board [][]string, dim int) bool {
+
+	var boardIsLegal bool = boardIsLegal(board, dim)
+	var queenCount int = queenCount(board, dim)
+
+	return boardIsLegal && (queenCount == 8)
+}
+
+
+
 func placeQueens1(board [][]string, numRows, r, c int) bool {
 	return false
 }

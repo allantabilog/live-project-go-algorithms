@@ -91,9 +91,6 @@ func TestBoardIsLegal(t *testing.T) {
 	badBoard[4][8] = queen
 	badBoard[6][8] = queen
 
-	Trace(goodBoard)
-
-
 	var testCases = []struct {
 		board [][]string
 		expected bool
@@ -108,4 +105,47 @@ func TestBoardIsLegal(t *testing.T) {
 		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 10), tc.description)
 	}
 
+}
+
+func TestQueenCount(t *testing.T) {
+	var emptyBoard = MakeBoard[string](10, 10, empty)
+
+	var nonEmptyBoard = MakeBoard[string](10, 10, empty)
+	nonEmptyBoard[0][0] = queen
+	nonEmptyBoard[1][2] = queen
+
+	assert.Equal(t, 0, queenCount(emptyBoard, 10))
+	assert.Equal(t, 2, queenCount(nonEmptyBoard, 10))
+}
+
+func TestBoardIsASolution(t *testing.T){
+	var emptyBoard = MakeBoard[string](10, 10, empty)
+
+	var goodBoard = MakeBoard[string](10, 10, empty)
+	goodBoard[0][0] = queen
+	goodBoard[1][2] = queen
+	goodBoard[2][4] = queen
+	goodBoard[3][6] = queen
+	goodBoard[4][8] = queen
+	goodBoard[6][3] = queen
+	goodBoard[7][1] = queen
+	goodBoard[9][5] = queen
+
+	var badBoard = MakeBoard[string](10, 10, empty)
+	badBoard[0][0] = queen
+	badBoard[1][3] = queen
+	badBoard[2][6] = queen
+	badBoard[3][7] = queen
+	badBoard[9][1] = queen
+	badBoard[5][6] = queen
+	badBoard[4][8] = queen
+	badBoard[6][8] = queen
+
+	var smallBoard = MakeBoard[string](10, 10, empty)
+	smallBoard[0][0] = queen
+
+	assert.False(t, boardIsASolution(emptyBoard, 10))
+	assert.True(t, boardIsASolution(goodBoard, 10))
+	assert.False(t, boardIsASolution(badBoard, 10))
+	assert.False(t, boardIsASolution(smallBoard, 10))
 }

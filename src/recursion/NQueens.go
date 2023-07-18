@@ -101,6 +101,28 @@ func boardIsASolution(board [][]string, dim int) bool {
 
 
 
-func placeQueens1(board [][]string, numRows, r, c int) bool {
+func placeQueens1(board [][]string, dim, row, col int) bool {
+
+	fmt.Println("Board state:")
+	Trace(board)
+
+
+	if row > dim - 1 {
+		return boardIsASolution(board, dim)
+	}
+	var nextRow, nextCol int = row, col + 1
+
+	if nextCol > dim - 1 {
+		nextRow = nextRow + 1
+	}
+
+	board[row][col] = queen
+
+	if placeQueens1(board, dim, nextRow, nextCol) {
+		return true
+	}
+
+	board[row][col] = empty
+
 	return false
 }

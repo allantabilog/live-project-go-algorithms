@@ -139,3 +139,8 @@ func TestBoardIsASolution(t *testing.T){
 	assert.False(t, boardIsASolution(emptyBoard, 8))
 	assert.False(t, boardIsASolution(smallBoard, 8))
 }
+
+func TestPlaceQueens1(t *testing.T){
+	var board4 = MakeBoard[string](4, 4, empty)
+	placeQueens1(board4, 4, 0, 0)
+}

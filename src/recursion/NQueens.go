@@ -69,9 +69,12 @@ func boardIsLegal(board [][]string, dim int) bool {
 		}
 	}
 	// scan all diagonals
-	// @todo. find an algorithm for scanning all diagonals systematically
-	if !seriesIsLegal(board, 10, 0, 0, 1, 1) {
-		return false
+	for row := 0; row < dim; row++ {
+		for col := 0; col < dim; col++ {
+			if !seriesIsLegal(board, 10, row, col, 1, 1) {
+				return false
+			}
+		}
 	}
 	return true
 }

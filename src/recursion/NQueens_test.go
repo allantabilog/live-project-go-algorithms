@@ -176,3 +176,25 @@ func TestPlaceQueens1_size4_attempt2(t *testing.T){
 	Trace(board)
 	fmt.Println("Solved? ", solution)
 }
+
+func TestPlaceQueens1_size5(t *testing.T){
+	var board = MakeBoard[string](5, 5, empty)
+	var solution = placeQueens1(board, 5, 0, 0)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
+}
+func TestPlaceQueens1_size6(t *testing.T){
+	var board = MakeBoard[string](6, 6, empty)
+	var solution = placeQueens1(board, 6, 0, 5)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
+}
+func TestPlaceQueens1_size7(t *testing.T){
+	var board = MakeBoard[string](7, 7, empty)
+	var solution = placeQueens1(board, 7, 0, 0)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
+}

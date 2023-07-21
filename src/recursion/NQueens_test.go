@@ -1,6 +1,7 @@
 package recursion
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -69,27 +70,26 @@ func TestSeriesIsLegal_Diagonal(t *testing.T) {
 
 func TestBoardIsLegal(t *testing.T) {
 	// generate some test boards
-	var emptyBoard = MakeBoard[string](10, 10, empty)
+	var emptyBoard = MakeBoard[string](4, 4, empty)
 
-	var goodBoard = MakeBoard[string](10, 10, empty)
-	goodBoard[0][0] = queen
-	goodBoard[1][2] = queen
-	goodBoard[2][4] = queen
-	goodBoard[3][6] = queen
-	goodBoard[4][8] = queen
-	goodBoard[6][3] = queen
-	goodBoard[7][1] = queen
-	goodBoard[9][5] = queen
+	var goodBoard = MakeBoard[string](4, 4, empty)
+	goodBoard[0][1] = queen
+	goodBoard[1][3] = queen
+	goodBoard[2][0] = queen
+	goodBoard[3][2] = queen
 
-	var badBoard = MakeBoard[string](10, 10, empty)
+	fmt.Println("goodBoard")
+	Trace(goodBoard)
+
+	var badBoard = MakeBoard[string](4, 4, empty)
 	badBoard[0][0] = queen
-	badBoard[1][3] = queen
-	badBoard[2][6] = queen
-	badBoard[3][7] = queen
-	badBoard[9][1] = queen
-	badBoard[5][6] = queen
-	badBoard[4][8] = queen
-	badBoard[6][8] = queen
+	badBoard[0][1] = queen
+	badBoard[1][0] = queen
+	badBoard[1][1] = queen
+
+	fmt.Println("badBoard")
+	Trace(badBoard)
+
 
 	var testCases = []struct {
 		board [][]string
@@ -102,10 +102,23 @@ func TestBoardIsLegal(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 10), tc.description)
+		assert.Equal(t, tc.expected, boardIsLegal(tc.board, 4), tc.description)
 	}
 
 }
+
+func TestBoardIsLegal_bad(t *testing.T) {
+	var badBoard = MakeBoard[string](3, 3, empty)
+	badBoard[0][0] = queen
+	badBoard[1][2] = queen
+	badBoard[2][1] = queen
+
+	Trace(badBoard)
+
+	assert.Equal(t, false, boardIsLegal(badBoard, 3))
+
+}
+
 
 func TestQueenCount(t *testing.T) {
 	var emptyBoard = MakeBoard[string](10, 10, empty)
@@ -140,7 +153,26 @@ func TestBoardIsASolution(t *testing.T){
 	assert.False(t, boardIsASolution(smallBoard, 8))
 }
 
-func TestPlaceQueens1(t *testing.T){
-	var board4 = MakeBoard[string](4, 4, empty)
-	placeQueens1(board4, 4, 0, 0)
+func TestPlaceQueens1_size3(t *testing.T){
+	var board = MakeBoard[string](3, 3, empty)
+	var solution = placeQueens1(board, 3, 0, 0)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
+}
+
+func TestPlaceQueens1_size4(t *testing.T){
+	var board = MakeBoard[string](4, 4, empty)
+	var solution = placeQueens1(board, 4, 0, 0)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
+}
+
+func TestPlaceQueens1_size4_attempt2(t *testing.T){
+	var board = MakeBoard[string](4, 4, empty)
+	var solution = placeQueens1(board, 4, 0, 2)
+	fmt.Println("Final board state: ")
+	Trace(board)
+	fmt.Println("Solved? ", solution)
 }

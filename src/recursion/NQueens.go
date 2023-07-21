@@ -32,24 +32,34 @@ func NQueensDriver() {
 
 }
 
-// Returns true if the given series of squares contains at most one queen
-func seriesIsLegal(board [][]string, dim, startRow, startCol, incrRow, incrCol int) bool {
-	// maybe validate that incrRow and incrCol are g.t. 0
-	// otherwise the loop below will never terminate
-	var queenCount = 0
 
-	var row, col = startRow, startCol
-	for {
-		if row > dim - 1 || col > dim - 1 {
-			break
-		}
-		if board[row][col] == queen {
-			queenCount ++
-		}
-		row, col = row + incrRow, col + incrCol
-	}
+func seriesIsLegal(board [][]string, dim, startRow, startCol, incrRow, incCol int) bool {
+    hasQueen := false
 
-	return queenCount < 2
+    r := startRow
+    c := startCol
+    for {
+        if board[r][c] == queen {
+            // If we already have a queen on this row,
+            // then this board is not legal.
+            if hasQueen { return false }
+
+            // Remember that we have a queen on this row.
+            hasQueen = true
+        }
+
+        // Move to the next square in the series.
+        r += incrRow
+        c += incCol
+
+        // If we fall off the board, then the series is legal.
+        if  r >= dim ||
+            c >= dim ||
+            r < 0 ||
+            c < 0 {
+                return true
+        }
+    }
 }
 
 // returns true iff
@@ -70,12 +80,26 @@ func boardIsLegal(board [][]string, dim int) bool {
 	}
 	// scan all diagonals
 	for row := 0; row < dim; row++ {
-		for col := 0; col < dim; col++ {
-			if !seriesIsLegal(board, dim, row, col, 1, 1) {
-				return false
-			}
+		if !seriesIsLegal(board, dim, row, 0, 1, 1) {
+			return false
 		}
 	}
+	for col := 0; col < dim; col++ {
+		if !seriesIsLegal(board, dim, 0, col, 1, 1) {
+			return false
+		}
+	}
+	for row := 0; row < dim; row++ {
+		if !seriesIsLegal(board, dim, row, dim - 1, 1, -1) {
+			return false
+		}
+	}
+	for col := 0; col < dim; col++ {
+		if !seriesIsLegal(board, dim, 0, col, 1, -1) {
+			return false
+		}
+	}
+
 	return true
 }
 
@@ -96,33 +120,70 @@ func boardIsASolution(board [][]string, dim int) bool {
 	var boardIsLegal bool = boardIsLegal(board, dim)
 	var queenCount int = queenCount(board, dim)
 
-	return boardIsLegal && (queenCount == 8)
+	return boardIsLegal && (queenCount == dim)
 }
 
-
-
 func placeQueens1(board [][]string, dim, row, col int) bool {
-
-	fmt.Println("Board state:")
 	Trace(board)
 
-
-	if row > dim - 1 {
+	if row >= dim {
 		return boardIsASolution(board, dim)
-	}
-	var nextRow, nextCol int = row, col + 1
-
-	if nextCol > dim - 1 {
-		nextRow = nextRow + 1
 	}
 
 	board[row][col] = queen
-
-	if placeQueens1(board, dim, nextRow, nextCol) {
-		return true
-	}
-
-	board[row][col] = empty
-
-	return false
+	 if boardIsLegal(board, dim) {
+		//good. make a recursive call to try the next square
+		nextRow, nextCol := row, col + 1
+		if nextCol >= dim {
+			nextRow = row + 1
+			nextCol = 0
+		}
+		return placeQueens1(board, dim, nextRow, nextCol)
+	 } else {
+		// backtrack
+		board[row][col] = empty
+		nextRow, nextCol := row, col + 1
+		if nextCol >= dim {
+			nextRow = row + 1
+			nextCol = 0
+		}
+		return placeQueens1(board, dim, nextRow, nextCol)
+	 }
 }
+
+
+// func placeQueens1(board [][]string, dim, row, col int) bool {
+
+// 	fmt.Println("Board state:")
+// 	Trace(board)
+
+
+// 	if row >= dim {
+// 		// We have made a complete assignment of queens
+// 		// check if we have a solution
+// 		return boardIsASolution(board, dim)
+// 	}
+// 	var nextRow, nextCol int = row, col + 1
+
+// 	if nextCol >= dim {
+// 		// we have fallen off the board
+// 		// move down to the beginning of the next row
+// 		nextRow = nextRow + 1
+// 		nextCol = 0
+// 	}
+
+// 	// // what happens if we do not place a square in row, col?
+// 	// // examine the next square 
+// 	// if placeQueens1(board, dim, nextRow, nextCol) {
+// 	// 	return true
+// 	// } 
+
+// 	board[row][col] = queen
+// 	if placeQueens1(board, dim, nextRow, nextCol) {
+// 		return true
+// 	} else {
+// 		// we backtrack
+// 		board[row][col] = empty
+// 		return false
+// 	}
+// }

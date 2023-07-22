@@ -59,11 +59,13 @@ func drawPosts(posts [][]int) {
 func moveDisks(posts [][]int, numToMove, fromPost, toPost, tempPost int) {
 	if numToMove > 1 {
 		moveDisks(posts, numToMove-1, fromPost, tempPost, toPost)
-		moveDisk(posts, fromPost, toPost)
-		moveDisks(posts, numToMove-1, tempPost, toPost, fromPost)
-		drawPosts(posts)
 	}
-	drawPosts(posts)
+		moveDisk(posts, fromPost, toPost)
+		drawPosts(posts)
+	if numToMove > 1 {
+		moveDisks(posts, numToMove-1, tempPost, toPost, fromPost)
+	}
+
 }
 
 func main() {

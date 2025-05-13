@@ -1,4 +1,4 @@
-package main
+package recursion
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	empty = "."
-	queen = "Q"
+// empty = "."
+// queen = "Q"
 )
 
 func makeBoard(dim int) [][]string {
@@ -213,7 +213,7 @@ func placeQueens4(board [][]string, dim, col int) bool {
 	return false
 }
 
-func main() {
+func main6() {
 	// try(2)
 	// try(3)
 	// try(4)
